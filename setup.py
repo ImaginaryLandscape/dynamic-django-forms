@@ -18,20 +18,21 @@ setup(
     version=__version__,
     description='JSON-Powered Dynamic Forms for Django',
     keywords='django,dynamic,forms,json',
-    author='Alexander Skvortsov',
-    author_email='sasha.skvortsov109@gmail.com',
-    maintainer='Alexander Skvortsov',
+    author='Alexander Skvortsov, Paul Bryant',
+    author_email='pbryant@imagescape.com',
+    maintainer='Paul Bryant',
     long_description=long_description,
     long_description_content_type='text/markdown',
     include_package_data=True,
     install_requires=[
-        'django>=2.0'
+        'django>=1.11,<2.0'
         ],
     license='MIT License',
     packages=find_packages(exclude=['tests', 'docs', 'example']),
-    url='https://github.com/askvortsov1/dynamic-django-forms',
+    url='https://github.com/ImaginaryLandscape/dynamic-django-forms',
     zip_safe=False,
     classifiers=[
+        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
