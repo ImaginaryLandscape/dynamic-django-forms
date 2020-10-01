@@ -1,14 +1,15 @@
+from datetime import date, datetime
 from django import forms
 from .boundfields import MultiValueBoundField
 from .widgets import FormBuilderWidget, FormRenderWidget
 from .utils import gen_fields_from_json
 
+from pdb import set_trace as bp
 
 class FormBuilderField(forms.CharField):
     def __init__(self, *args, **kwargs):
         kwargs['widget'] = FormBuilderWidget
         return super(FormBuilderField, self).__init__(*args, **kwargs)
-
 
 class FormRenderField(forms.MultiValueField):
     def __init__(self, form_json=[], required=False, **kwargs):
@@ -19,9 +20,15 @@ class FormRenderField(forms.MultiValueField):
         kwargs['label'] = ""
         kwargs['require_all_fields'] = False
         kwargs['required'] = required
-        del kwargs['max_length']
         super(FormRenderField, self).__init__(**kwargs)
         self.configure_widget()
+
+    def clean(self, value):
+        cleaned_data = super(FormRenderField, self).clean(value)
+        for key, val in cleaned_data.items():
+            if isinstance(val, date):
+                cleaned_data[key] = datetime.strftime(val, '%Y-%m-%d')
+        return cleaned_data
 
     def get_bound_field(self, form, field_name):
         return MultiValueBoundField(form, self, field_name)
@@ -42,7 +49,7 @@ class FormRenderField(forms.MultiValueField):
                 f.required = False
         return tuple(fields)
 
-    def add_fields(self, form_json):
+    def add_fields(self, form_json, form):
         self.fields += self._configure_new_fields(gen_fields_from_json(form_json))
         self.configure_widget()
 
