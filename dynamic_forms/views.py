@@ -20,11 +20,5 @@ class DynamicFormMixin(FormMixin):
         # Get json form configuration from form-containing object
         json_data = getattr(self.form_instance, self.form_field)
         # Add fields in JSON to dynamic form rendering field.
-        form.fields[self.response_field].add_fields(json_data)
+        form.fields[self.response_field].add_fields(json_data, form)
         return form
-
-    def form_valid(self, form):
-        action = form.save(commit=False)
-        action.survey = self.form_instance
-        action.save()
-        return super(DynamicFormMixin, self).form_valid(form)
