@@ -9,7 +9,11 @@ class FormBuilderWidget(forms.Textarea):
     def format_value(self, value):
         if value is None:
             return None
-        return json.dumps(value)
+        try:
+            json.loads(value)
+            return value
+        except:
+            return json.dumps(value)
 
 
 class FormRenderWidget(forms.MultiWidget):

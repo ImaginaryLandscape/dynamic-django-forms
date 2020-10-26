@@ -4,7 +4,6 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from .formfields import FormBuilderField, FormRenderField
 
-from pdb import set_trace as bp
 
 class FormField(JSONField):
 

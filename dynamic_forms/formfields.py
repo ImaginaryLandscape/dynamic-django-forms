@@ -4,12 +4,12 @@ from .boundfields import MultiValueBoundField
 from .widgets import FormBuilderWidget, FormRenderWidget
 from .utils import gen_fields_from_json
 
-from pdb import set_trace as bp
 
 class FormBuilderField(forms.CharField):
     def __init__(self, *args, **kwargs):
         kwargs['widget'] = FormBuilderWidget
         return super(FormBuilderField, self).__init__(*args, **kwargs)
+
 
 class FormRenderField(forms.MultiValueField):
     def __init__(self, form_json=[], required=False, **kwargs):
