@@ -1,3 +1,5 @@
 {{label}}
 {{field}}
-<p>{{help_text}}</p>
+{% if help_text %}
+    <p>{{help_text}}</p>
+{% endif %}
