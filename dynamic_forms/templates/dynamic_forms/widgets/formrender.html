@@ -15,3 +15,50 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
 </script>
+<script>
+    /*
+    The functions handleCheckboxRequired and toggleRequiredProperty allow groups of checkboxes to
+    have a "require at least one" behavior if the "required" property was selected during form creation.
+    */
+    const toggleRequiredProperty = function(e) {
+        /*
+        If any checkboxes are selected, then set required to false on all checkboxes.
+        If no checkboxes are selected, then set required to true on all checkboxes.
+        This allows us to create a kind of "at least one checkbox out of the group
+        must be selected" type of behaviour.
+        */
+        const checkboxes = Array.from(this.querySelectorAll(
+            'input[type="checkbox"]'
+        ))
+        const anyCheckboxSelected = checkboxes.filter(function(cbox) {
+            return cbox.checked
+        }).length > 0;
+        checkboxes.forEach(function(cbox) {
+            if (anyCheckboxSelected == true) {
+                cbox.required = false
+            } else {
+                cbox.required = true
+            }
+        })
+    }
+
+    const handleCheckboxRequired = function() {
+        /*
+        Iterate through checkbox groups (ul.dynamic-form-checkbox) and if the required
+        property is found to be true, then set the click event lister, toggleRequiredProperty,
+        on the checkbox group.
+        */
+        const checkboxGroups = document.querySelectorAll('ul.dynamic-form-checkbox');
+        for (let checkboxes of checkboxGroups) {
+            let checkboxesRequired = false
+            for (let cbox of checkboxes.querySelectorAll('input[type="checkbox"]')) {
+                checkboxesRequired = cbox.required ? true : false;
+            }
+            if (checkboxesRequired == true) {
+                checkboxes.addEventListener('click', toggleRequiredProperty);
+            }
+        }
+    }
+
+    handleCheckboxRequired();
+</script>

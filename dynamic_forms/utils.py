@@ -2,8 +2,14 @@ from django import forms
 
 
 def _process_checkbox(field_json):
+    """
+    It is not possible to set required on a set of checkboxes to enforce
+    than at least one checkbox must be checked out of the group.  Because of this
+    a class attribute is added to the widget so that this behaviour can be controlled
+    by javascript in the templates.
+    """
     field = forms.MultipleChoiceField()
-    field.widget = forms.CheckboxSelectMultiple()
+    field.widget = forms.CheckboxSelectMultiple(attrs={'class': 'dynamic-form-checkbox'})
     return field
 
 
