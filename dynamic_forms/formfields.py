@@ -20,6 +20,9 @@ class FormRenderField(forms.MultiValueField):
         kwargs['label'] = ""
         kwargs['require_all_fields'] = False
         kwargs['required'] = required
+        del kwargs['max_length']  # This line had been removed in our version, but that
+                                  # causes an error now, so I'm reinstating. See also
+                                  # "dynamic_forms/models.py" - NTT
         super().__init__(**kwargs)
         self.configure_widget()
 
@@ -49,7 +52,7 @@ class FormRenderField(forms.MultiValueField):
                 f.required = False
         return tuple(fields)
 
-    def add_fields(self, form_json, form):
+    def add_fields(self, form_json):
         self.fields += self._configure_new_fields(gen_fields_from_json(form_json))
         self.configure_widget()
 

@@ -2,7 +2,6 @@ from django.views.generic.edit import FormMixin
 
 
 class DynamicFormMixin(FormMixin):
-    form_model_pk_field = None
     form_field = "form"
     form_pk_url_kwarg = "pk"
 
@@ -20,5 +19,12 @@ class DynamicFormMixin(FormMixin):
         # Get json form configuration from form-containing object
         json_data = getattr(self.form_instance, self.form_field)
         # Add fields in JSON to dynamic form rendering field.
-        form.fields[self.response_field].add_fields(json_data, form)
+        form.fields[self.response_field].add_fields(json_data)
         return form
+
+    # I don't know why this was removed; I've added it back, but commented out - NTT
+    # def form_valid(self, form):
+    #     action = form.save(commit=False)
+    #     setattr(action, self.response_form_fk_field, self.form_instance)
+    #     action.save()
+    #     return super().form_valid(form)
