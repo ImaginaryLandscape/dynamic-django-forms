@@ -8,7 +8,7 @@ from .utils import gen_fields_from_json
 class FormBuilderField(forms.CharField):
     def __init__(self, *args, **kwargs):
         kwargs['widget'] = FormBuilderWidget
-        return super(FormBuilderField, self).__init__(*args, **kwargs)
+        return super().__init__(*args, **kwargs)
 
 
 class FormRenderField(forms.MultiValueField):
@@ -20,11 +20,11 @@ class FormRenderField(forms.MultiValueField):
         kwargs['label'] = ""
         kwargs['require_all_fields'] = False
         kwargs['required'] = required
-        super(FormRenderField, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.configure_widget()
 
     def clean(self, value):
-        cleaned_data = super(FormRenderField, self).clean(value)
+        cleaned_data = super().clean(value)
         for key, val in cleaned_data.items():
             if isinstance(val, date):
                 cleaned_data[key] = datetime.strftime(val, '%Y-%m-%d')

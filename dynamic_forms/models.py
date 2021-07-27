@@ -9,7 +9,7 @@ class FormField(JSONField):
 
     def formfield(self, **kwargs):
         kwargs['form_class'] = FormBuilderField
-        return super(FormField, self).formfield(**kwargs)
+        return super().formfield(**kwargs)
 
 
 class ResponseField(JSONField):
@@ -37,4 +37,4 @@ class ResponseField(JSONField):
 
     def formfield(self, *args, **kwargs):
         kwargs['form_class'] = FormRenderField
-        return super(ResponseField, self).formfield(*args, **kwargs)
+        return super().formfield(*args, **kwargs)
